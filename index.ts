@@ -11,13 +11,21 @@ function originalStream() {
   ending();
 }
 
-function getDescription(names: string[]): string {
-  return ["川原さんのYoutubeを"].concat(names.map(name => `${name}さんが見てるのを`)).join("");
+interface Comedian {
+  name: string;
+  shouldWatch: boolean;
 }
 
-function recursive_watch(names: string[], isFirst: boolean) {
+
+function getDescription(comedians: Comedian[]): string {
+  return ["川原さんのYoutubeを"]
+    .concat(comedians.map(comedian => `${comedian.name}さんが${comedian.shouldWatch ? "見てる" : "見てない"}のを`))
+    .join("");
+}
+
+function recursive_watch(comedians: Comedian[], isFirst: boolean) {
   // 探索要素が無くなった場合の処理。
-  if (names.length === 0) {
+  if (comedians.length === 0) {
     // 最後まで行ったら元々のYoutubeが流れる。
     originalStream();
     return;
@@ -27,22 +35,31 @@ function recursive_watch(names: string[], isFirst: boolean) {
     // 動画の最初の人だけオープニングが流れる
     opening();
   }
-  const preDescription = `${getDescription(names)}皆さんに見てもらいます。`;
+  const preDescription = `${getDescription(comedians)}皆さんに見てもらいます。`;
   console.log(preDescription);
 
   // 自身を除いた配列にする。実行が終わった要素を除いていくことで処理が終了に向かう
-  const previousNames = names.slice(0, -1);
+  const previousComedians = comedians.slice(0, -1);
   // PCを開いて動画を見る。
-  recursive_watch(previousNames, false);
-  const postDescription = `${getDescription(names)}皆さんに見てもらいました。ありがとうございました。`;
+  recursive_watch(previousComedians, false);
+  const postDescription = `${getDescription(comedians)}皆さんに見てもらいました。ありがとうございました。`;
   console.log(postDescription);
   ending();
 }
 
 function main() {
-  const comedianNames = ["川原", "秋山", "山名", "川西"];
+  const comedians: Comedian[] = [
+    { name: "川原", shouldWatch: true },
+    { name: "秋山", shouldWatch: true },
+    { name: "山名", shouldWatch: true },
+    { name: "川西", shouldWatch: true },
+    { name: "石井", shouldWatch: true },
+    { name: "津田", shouldWatch: false },
+    { name: "川原", shouldWatch: false },
+    { name: "秋山", shouldWatch: true },
+  ];
   const isFirst = true;
-  recursive_watch(comedianNames, isFirst);
+  recursive_watch(comedians, isFirst);
 }
 
 main();
