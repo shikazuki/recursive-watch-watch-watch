@@ -1,0 +1,23 @@
+{
+  "name": "recursive-watch-watch-watch",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.ts",
+  "scripts": {
+    "start": "node --import=tsx index.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shikazuki/recursive-watch-watch-watch.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/shikazuki/recursive-watch-watch-watch/issues"
+  },
+  "homepage": "https://github.com/shikazuki/recursive-watch-watch-watch#readme",
+  "devDependencies": {
+    "tsx": "^4.19.2"
+  }
+}
